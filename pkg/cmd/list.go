@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"os"
+	"sort"
 	"strconv"
 
 	"github.com/olekukonko/tablewriter"
@@ -29,9 +30,10 @@ func (a *ListCmd) Run(app *App) error {
 		filters.Priority = a.Priority
 	}
 	if a.Category != nil {
-		filters.Priority = a.Category
+		filters.Category = a.Category
 	}
 	todos, err := app.Srv.GetTodo(&filters)
+	sort.Slice(todos, func(i, j int) bool { return todos[i].ID < todos[j].ID })
 	if err != nil {
 		return err
 	}

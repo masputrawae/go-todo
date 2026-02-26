@@ -8,14 +8,22 @@ import (
 )
 
 func (r *Repo) Update(i *model.TodoUpdateType) error {
-	dt := time.Now()
-	updated := false
-	var index int
+	var (
+		dt      = time.Now()
+		validID = false
+		updated = false
+		index   int
+	)
 
 	for idx := range r.Todos {
 		if r.Todos[idx].ID == *i.ID {
 			index = idx
+			validID = true
 		}
+	}
+
+	if !validID {
+		return errors.New("id tidak ditemukan")
 	}
 
 	if i.Task != nil {
