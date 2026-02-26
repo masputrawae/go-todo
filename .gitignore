@@ -36,4 +36,4 @@ go.work.sum
 # database
 *.sqlite
 *.db
-
+todos.json
