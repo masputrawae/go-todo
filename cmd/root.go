@@ -15,11 +15,12 @@ import (
 )
 
 var (
-	Todos    []model.Todo
-	FilePath = "todos.json"
-	Cfg      = utils.LoadConfig("configs/config.yaml")
-	Repo     = repo.NewTodoRepo(Todos, FilePath)
-	Svc      = service.NewTodoService(Repo, Cfg.Statuses, Cfg.Priorities)
+	FilePath   = "todos.json"
+	ConfigFile = "configs/config.yaml"
+	Todos      = []model.Todo{}
+	Cfg        = utils.LoadConfig(ConfigFile)
+	Repo       = repo.NewTodoRepo(Todos, FilePath)
+	Svc        = service.NewTodoService(Repo, Cfg.Statuses, Cfg.Priorities)
 )
 
 var rootCmd = &cobra.Command{

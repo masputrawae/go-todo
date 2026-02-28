@@ -4,6 +4,8 @@ Copyright © 2026 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"fmt"
+
 	"github.com/masputrawae/todo-cli/internal/model"
 	"github.com/spf13/cobra"
 )
@@ -27,13 +29,14 @@ var addCmd = &cobra.Command{
 			todo.Priority = &addFlagPriority
 		}
 		if addFlagStatus != "" {
-			todo.Priority = &addFlagStatus
+			todo.Status = &addFlagStatus
 		}
 		if addFlagProject != "" {
-			todo.Priority = &addFlagProject
+			todo.Project = &addFlagProject
 		}
 
 		if err := Svc.Create(todo); err != nil {
+			fmt.Println(err)
 			return
 		}
 	},
@@ -41,7 +44,7 @@ var addCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(addCmd)
-	addCmd.Flags().StringVarP(&addFlagPriority, "priority", "p", "", "priority")
+	addCmd.Flags().StringVarP(&addFlagPriority, "priority", "P", "", "priority")
 	addCmd.Flags().StringVarP(&addFlagStatus, "status", "s", "", "status")
-	addCmd.Flags().StringVarP(&addFlagProject, "project", "g", "", "project")
+	addCmd.Flags().StringVarP(&addFlagProject, "project", "p", "", "project")
 }

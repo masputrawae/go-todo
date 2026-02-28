@@ -45,5 +45,6 @@ func NormalizeText(s string) string {
 
 // same text
 func TextIsSame(s, i string) bool {
+	// debug
 	return NormalizeText(s) == NormalizeText(i)
 }

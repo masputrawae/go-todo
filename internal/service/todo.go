@@ -45,24 +45,37 @@ func (ts *TodoService) Create(u model.TodoAddInput) error {
 	todo.Task = u.Task
 
 	if u.Priority != nil {
+		found := false
 		for i := range ts.Priorities {
-			sameID := utils.TextIsSame(ts.Priorities[i].ID, *u.Priority)
-			sameShort := utils.TextIsSame(ts.Priorities[i].Short, *u.Priority)
-			if !sameID || sameShort {
-				return ErrPriorityNotSame
+			isSameID := utils.TextIsSame(ts.Priorities[i].ID, *u.Priority)
+			isSameShort := utils.TextIsSame(ts.Priorities[i].Short, *u.Priority)
+
+			if isSameID || isSameShort {
+				priority := ts.Priorities[i].ID
+				todo.Priority = &priority
+				found = true
+				break
 			}
-			priority := utils.NormalizeText(*u.Priority)
-			todo.Priority = &priority
+		}
+
+		if !found {
+			return ErrPriorityNotSame
 		}
 	}
 
 	if u.Status != nil {
+		found := false
 		for i := range ts.Statuses {
-			if !utils.TextIsSame(ts.Statuses[i].ID, *u.Status) {
-				return ErrStatusNotSame
+			if utils.TextIsSame(ts.Statuses[i].ID, *u.Status) {
+				status := ts.Statuses[i].ID
+				todo.Status = &status
+				found = true
+				break
 			}
-			status := utils.NormalizeText(*u.Status)
-			todo.Priority = &status
+		}
+
+		if !found {
+			return ErrStatusNotSame
 		}
 	}
 
@@ -88,25 +101,38 @@ func (ts *TodoService) Update(u model.TodoEditInput) error {
 		todo.Task = u.Task
 	}
 
-	if u.Priority != nil && utils.TextIsSame(*old.Priority, *u.Priority) {
+	if u.Priority != nil {
+		found := false
 		for i := range ts.Priorities {
-			sameID := utils.TextIsSame(ts.Priorities[i].ID, *u.Priority)
-			sameShort := utils.TextIsSame(ts.Priorities[i].Short, *u.Priority)
-			if !sameID || sameShort {
-				return ErrPriorityNotSame
+			isSameID := utils.TextIsSame(ts.Priorities[i].ID, *u.Priority)
+			isSameShort := utils.TextIsSame(ts.Priorities[i].Short, *u.Priority)
+
+			if isSameID || isSameShort {
+				priority := ts.Priorities[i].ID
+				todo.Priority = &priority
+				found = true
+				break
 			}
-			priority := utils.NormalizeText(*u.Priority)
-			todo.Priority = &priority
+		}
+
+		if !found {
+			return ErrPriorityNotSame
 		}
 	}
 
 	if u.Status != nil && utils.TextIsSame(*old.Status, *u.Status) {
+		found := false
 		for i := range ts.Statuses {
 			if !utils.TextIsSame(ts.Statuses[i].ID, *u.Status) {
-				return ErrStatusNotSame
+				status := ts.Statuses[i].ID
+				todo.Status = &status
+				found = true
+				break
 			}
-			status := utils.NormalizeText(*u.Status)
-			todo.Priority = &status
+		}
+
+		if !found {
+			return ErrStatusNotSame
 		}
 	}
 
