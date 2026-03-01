@@ -1,39 +1,37 @@
-priorities:
-  - id: highest
-    short: A
-    name: Highest
-    color: isi-nanti
-  - id: high
-    short: B
-    name: High
-    color: isi-nanti
-  - id: medium
-    short: C
-    name: Medium
-    color: isi-nanti
-  - id: low
-    short: D
-    name: Low
-    color: isi-nanti
-  - id: lowest
-    short: E
-    name: Lowest
-    color: isi-nanti
-
 statuses:
-  - id: active
-    name: Active
-    emoji: 🔵
-  - id: in-progress
-    name: In Progress
-    emoji: 🟢
-  - id: done
-    name: Done
-    emoji: ⚫
-  - id: cancelled
-    name: Cancelled
-    emoji: 🔴
-  - id: archive
-    name: Archive
-    emoji: 🟣
-
+    - id: active
+      name: Active
+      emoji: "\U0001F535"
+    - id: in-progress
+      name: In Progress
+      emoji: "\U0001F7E2"
+    - id: done
+      name: Done
+      emoji: ⚫
+    - id: cancelled
+      name: Active
+      emoji: "\U0001F534"
+    - id: archive
+      name: Archive
+      emoji: "\U0001F7E3"
+priorities:
+    - id: highest
+      short: A
+      name: Highest
+      color: "\e[31;1m"
+    - id: high
+      short: B
+      name: High
+      color: "\e[33;1m"
+    - id: medium
+      short: C
+      name: Medium
+      color: "\e[32;1m"
+    - id: low
+      short: D
+      name: Low
+      color: "\e[34;1m"
+    - id: lowest
+      short: E
+      name: Lowest
+      color: "\e[34;1m"

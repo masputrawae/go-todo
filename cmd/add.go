@@ -5,46 +5,45 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
-	"github.com/masputrawae/todo-cli/internal/model"
+	"github.com/masputrawae/todo-cli/model"
 	"github.com/spf13/cobra"
 )
 
-var (
-	addFlagPriority string
-	addFlagStatus   string
-	addFlagProject  string
-)
-
+// addCmd represents the add command
 var addCmd = &cobra.Command{
-	Use:     "add",
-	Short:   "A brief description of your command",
-	Aliases: []string{"a"},
-	Args:    cobra.ExactArgs(1),
+	Use:   "add",
+	Short: "A brief description of your command",
+	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		var todo model.TodoAddInput
+		var todo model.TodoAdd
 		todo.Task = args[0]
 
-		if addFlagPriority != "" {
-			todo.Priority = &addFlagPriority
+		if fProject != "" {
+			todo.Project = &fProject
 		}
-		if addFlagStatus != "" {
-			todo.Status = &addFlagStatus
+		if fContext != "" {
+			todo.Context = &fContext
 		}
-		if addFlagProject != "" {
-			todo.Project = &addFlagProject
+		if fPriority != "" {
+			todo.Priority = &fPriority
+		}
+		if fStatus != "" {
+			todo.Status = &fStatus
 		}
 
 		if err := Svc.Create(todo); err != nil {
 			fmt.Println(err)
-			return
+			os.Exit(1)
 		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(addCmd)
-	addCmd.Flags().StringVarP(&addFlagPriority, "priority", "P", "", "priority")
-	addCmd.Flags().StringVarP(&addFlagStatus, "status", "s", "", "status")
-	addCmd.Flags().StringVarP(&addFlagProject, "project", "p", "", "project")
+	addCmd.Flags().StringVarP(&fProject, "project", "P", "", "project")
+	addCmd.Flags().StringVarP(&fPriority, "priority", "p", "", "priority")
+	addCmd.Flags().StringVarP(&fStatus, "status", "s", "", "status")
+	addCmd.Flags().StringVarP(&fContext, "context", "c", "", "context")
 }
